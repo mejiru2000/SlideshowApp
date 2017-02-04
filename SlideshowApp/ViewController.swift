@@ -34,7 +34,11 @@ class ViewController: UIViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if event?.touches(for: slideImageView) != nil {
-        performSegue(withIdentifier: "toKakudaiViewController", sender:nil)
+           performSegue(withIdentifier: "toKakudaiViewController", sender:nil)
+           if self.timer != nil{
+              self.timer.invalidate()
+              self.timer = nil
+           }
         }
     }
     
@@ -89,6 +93,9 @@ class ViewController: UIViewController {
     }
     
     @IBAction func unwind(segue: UIStoryboardSegue) {
+        if self.timer == nil{
+           self.timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(slideStart), userInfo: nil, repeats: true)
+        }
     }
 }
 
